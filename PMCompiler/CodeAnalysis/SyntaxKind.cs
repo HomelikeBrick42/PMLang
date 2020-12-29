@@ -1,18 +1,18 @@
 namespace PMCompiler.CodeAnalysis
 {
-    enum SyntaxKind
+    public enum SyntaxKind
     {
         // Tokens
-        NumberToken,
+        BadToken,
+        EndOfFileToken,
         WhitespaceToken,
+        NumberToken,
         PlusToken,
         MinusToken,
         AsteriskToken,
         ForwardSlashToken,
         OpenParenthesesToken,
         CloseParenthesesToken,
-        BadToken,
-        EndOfFileToken,
 
         // Expressions
         NumberExpression,

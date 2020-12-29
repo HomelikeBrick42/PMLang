@@ -5,11 +5,11 @@ using PMCompiler.CodeAnalysis;
 
 namespace PMCompiler
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            bool showTree = false;
+            var showTree = false;
 
             while (true)
             {
@@ -56,7 +56,7 @@ namespace PMCompiler
             }
         }
 
-        static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
+        private static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
         {
             var marker = isLast ? "└───" : "├───";
 

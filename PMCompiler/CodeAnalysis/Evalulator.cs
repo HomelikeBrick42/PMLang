@@ -2,7 +2,7 @@ using System;
 
 namespace PMCompiler.CodeAnalysis
 {
-    class Evalulator
+    public sealed class Evalulator
     {
         private readonly ExpressionSyntax _root;
 
@@ -22,8 +22,8 @@ namespace PMCompiler.CodeAnalysis
             {
                 case SyntaxKind.NumberExpression:
                 {
-                    var numberExpression = (NumberExpressionSyntax)root;
-                    return (int)numberExpression.NumberToken.Value;
+                    var numberExpression = (LiteralExpressionSyntax)root;
+                    return (int)numberExpression.LiteralToken.Value;
                 }
 
                 case SyntaxKind.BinaryExpression:
