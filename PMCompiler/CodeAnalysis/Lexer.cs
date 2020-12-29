@@ -31,7 +31,7 @@ namespace PMCompiler.CodeAnalysis
             _position++;
         }
 
-        public SyntaxToken NextToken()
+        public SyntaxToken Lex()
         {
             var start = _position;
 
