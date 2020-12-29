@@ -33,7 +33,7 @@ namespace PMCompiler.CodeAnalysis
                     var unaryExpression = (BoundUnaryExpression)root;
 
                     var operand = EvalulateExpression(unaryExpression.Operand);
-                    switch (unaryExpression.OperatorKind)
+                    switch (unaryExpression.Operator.Kind)
                     {
                         case BoundUnaryOperatorKind.Identity:
                             return +(int)operand;
@@ -44,7 +44,7 @@ namespace PMCompiler.CodeAnalysis
                             return !(bool)operand;
 
                         default:
-                            throw new Exception($"Unexpected unary operator {unaryExpression.OperatorKind}.");
+                            throw new Exception($"Unexpected unary operator {unaryExpression.Operator.Kind}.");
                     }
                 }
 
@@ -55,7 +55,7 @@ namespace PMCompiler.CodeAnalysis
                     var left = EvalulateExpression(binaryExpression.Left);
                     var right = EvalulateExpression(binaryExpression.Right);
 
-                    switch (binaryExpression.OperatorKind)
+                    switch (binaryExpression.Operator.Kind)
                     {
                         case BoundBinaryOperatorKind.Addition:
                             return (int)left + (int)right;
@@ -72,7 +72,7 @@ namespace PMCompiler.CodeAnalysis
                             return (bool)left || (bool)right;
 
                         default:
-                            throw new Exception($"Unexpected binary operator {binaryExpression.OperatorKind}.");
+                            throw new Exception($"Unexpected binary operator {binaryExpression.Operator.Kind}.");
                     }
                 }
                 
