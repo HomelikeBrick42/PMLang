@@ -1,14 +1,14 @@
 using System;
-
+using PMCompiler.CodeAnalysis.Binding;
 using PMCompiler.CodeAnalysis.Syntax;
 
 namespace PMCompiler.CodeAnalysis
 {
-    public sealed class Evalulator
+    internal sealed class Evalulator
     {
-        private readonly ExpressionSyntax _root;
+        private readonly BoundExpression _root;
 
-        public Evalulator(ExpressionSyntax root)
+        public Evalulator(BoundExpression root)
         {
             _root = root;
         }
@@ -18,60 +18,54 @@ namespace PMCompiler.CodeAnalysis
             return EvalulateExpression(_root);
         }
 
-        private int EvalulateExpression(ExpressionSyntax root)
+        private int EvalulateExpression(BoundExpression root)
         {
             switch (root.Kind)
             {
-                case SyntaxKind.LiteralExpression:
+                case BoundNodeKind.LiteralExpression:
                 {
-                    var numberExpression = (LiteralExpressionSyntax)root;
-                    return (int)numberExpression.LiteralToken.Value;
+                    var numberExpression = (BoundLiteralExpression)root;
+                    return (int)numberExpression.Value;
                 }
 
-                case SyntaxKind.UnaryExpression:
+                case BoundNodeKind.UnaryExpression:
                 {
-                    var unaryExpression = (UnaryExpressionSyntax)root;
+                    var unaryExpression = (BoundUnaryExpression)root;
 
                     var operand = EvalulateExpression(unaryExpression.Operand);
-                    switch (unaryExpression.OperatorToken.Kind)
+                    switch (unaryExpression.OperatorKind)
                     {
-                        case SyntaxKind.PlusToken:
+                        case BoundUnaryOperatorKind.Identity:
                             return +operand;
-                        case SyntaxKind.MinusToken:
+                        case BoundUnaryOperatorKind.Negation:
                             return -operand;
 
                         default:
-                            throw new Exception($"Unexpected unary operator {unaryExpression.OperatorToken.Kind}.");
+                            throw new Exception($"Unexpected unary operator {unaryExpression.OperatorKind}.");
                     }
                 }
 
-                case SyntaxKind.BinaryExpression:
+                case BoundNodeKind.BinaryExpression:
                 {
-                    var binaryExpression = (BinaryExpressionSyntax)root;
+                    var binaryExpression = (BoundBinaryExpression)root;
 
                     var left = EvalulateExpression(binaryExpression.Left);
                     var right = EvalulateExpression(binaryExpression.Right);
 
-                    switch (binaryExpression.OperatorToken.Kind)
+                    switch (binaryExpression.OperatorKind)
                     {
-                        case SyntaxKind.PlusToken:
+                        case BoundBinaryOperatorKind.Addition:
                             return (int)left + (int)right;
-                        case SyntaxKind.MinusToken:
+                        case BoundBinaryOperatorKind.Subtraction:
                             return (int)left - (int)right;
-                        case SyntaxKind.AsteriskToken:
+                        case BoundBinaryOperatorKind.Multiplication:
                             return (int)left * (int)right;
-                        case SyntaxKind.ForwardSlashToken:
+                        case BoundBinaryOperatorKind.Division:
                             return (int)left / (int)right;
 
                         default:
-                            throw new Exception($"Unexpected binary operator {binaryExpression.OperatorToken.Kind}.");
+                            throw new Exception($"Unexpected binary operator {binaryExpression.OperatorKind}.");
                     }
-                }
-
-                case SyntaxKind.ParenthesizedExpression:
-                {
-                    var parenthesizedExpression = (ParenthesizedExpressionSyntax)root;
-                    return EvalulateExpression(parenthesizedExpression.Expression);
                 }
                 
                 default:

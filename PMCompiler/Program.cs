@@ -2,6 +2,7 @@
 using System.Linq;
 
 using PMCompiler.CodeAnalysis;
+using PMCompiler.CodeAnalysis.Binding;
 using PMCompiler.CodeAnalysis.Syntax;
 
 namespace PMCompiler
@@ -31,6 +32,10 @@ namespace PMCompiler
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
+                var binder = new Binder();
+                var boundExpression = binder.BindExpression(syntaxTree.Root);
+
+                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (showTree)
                 {
@@ -41,7 +46,7 @@ namespace PMCompiler
 
                 if (!syntaxTree.Diagnostics.Any())
                 {
-                    var evalulator = new Evalulator(syntaxTree.Root);
+                    var evalulator = new Evalulator(boundExpression);
                     var result = evalulator.Evalulate();
                     Console.WriteLine(result);
                 }
