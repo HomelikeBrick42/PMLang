@@ -110,7 +110,7 @@ namespace PMCompiler.CodeAnalysis.Syntax
                 case SyntaxKind.FalseKeyword:
                 {
                     var keyworkToken = NextToken();
-                    var value = Current.Kind == SyntaxKind.TrueKeyword;
+                    var value = keyworkToken.Kind == SyntaxKind.TrueKeyword;
                     return new LiteralExpressionSyntax(keyworkToken, value);
                 }
 

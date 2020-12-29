@@ -40,6 +40,9 @@ namespace PMCompiler.CodeAnalysis
                         case BoundUnaryOperatorKind.Negation:
                             return -(int)operand;
 
+                        case BoundUnaryOperatorKind.LogicalNegation:
+                            return !(bool)operand;
+
                         default:
                             throw new Exception($"Unexpected unary operator {unaryExpression.OperatorKind}.");
                     }
@@ -49,19 +52,24 @@ namespace PMCompiler.CodeAnalysis
                 {
                     var binaryExpression = (BoundBinaryExpression)root;
 
-                    var left = (int)EvalulateExpression(binaryExpression.Left);
-                    var right = (int)EvalulateExpression(binaryExpression.Right);
+                    var left = EvalulateExpression(binaryExpression.Left);
+                    var right = EvalulateExpression(binaryExpression.Right);
 
                     switch (binaryExpression.OperatorKind)
                     {
                         case BoundBinaryOperatorKind.Addition:
-                            return left + right;
+                            return (int)left + (int)right;
                         case BoundBinaryOperatorKind.Subtraction:
-                            return left - right;
+                            return (int)left - (int)right;
                         case BoundBinaryOperatorKind.Multiplication:
-                            return left * right;
+                            return (int)left * (int)right;
                         case BoundBinaryOperatorKind.Division:
-                            return left / right;
+                            return (int)left / (int)right;
+
+                        case BoundBinaryOperatorKind.LogicalAnd:
+                            return (bool)left && (bool)right;
+                        case BoundBinaryOperatorKind.LogicalOr:
+                            return (bool)left || (bool)right;
 
                         default:
                             throw new Exception($"Unexpected binary operator {binaryExpression.OperatorKind}.");

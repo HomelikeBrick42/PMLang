@@ -14,6 +14,10 @@ namespace PMCompiler.CodeAnalysis.Syntax
         OpenParenthesesToken,
         CloseParenthesesToken,
         IdentifierToken,
+        ExclamationToken,
+
+        AmpersandAmpersandToken,
+        PipePipeToken,
 
         // Keywords
         TrueKeyword,
@@ -23,6 +27,6 @@ namespace PMCompiler.CodeAnalysis.Syntax
         LiteralExpression,
         UnaryExpression,
         BinaryExpression,
-        ParenthesizedExpression
+        ParenthesizedExpression,
     }
 }

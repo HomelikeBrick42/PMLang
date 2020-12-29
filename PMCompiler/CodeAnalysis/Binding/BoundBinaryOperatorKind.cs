@@ -5,6 +5,8 @@ namespace PMCompiler.CodeAnalysis.Binding
         Addition,
         Subtraction,
         Multiplication,
-        Division
+        Division,
+        LogicalAnd,
+        LogicalOr
     }
 }
