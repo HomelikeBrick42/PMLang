@@ -7,6 +7,8 @@ namespace PMCompiler.CodeAnalysis.Binding
         Multiplication,
         Division,
         LogicalAnd,
-        LogicalOr
+        LogicalOr,
+        LogicalEquals,
+        LogicalNotEquals
     }
 }

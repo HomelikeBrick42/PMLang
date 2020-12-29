@@ -109,8 +109,16 @@ namespace PMCompiler.CodeAnalysis.Syntax
                 }
                 case '!':
                 {
-                    _position += 1;
-                    return new SyntaxToken(SyntaxKind.ExclamationToken, start, "!", null);
+                    if (LookAhead == '=')
+                    {
+                        _position += 2;
+                        return new SyntaxToken(SyntaxKind.ExclamationEqualsToken, start, "!=", null);
+                    }
+                    else
+                    {
+                        _position += 1;
+                        return new SyntaxToken(SyntaxKind.ExclamationToken, start, "!", null);
+                    }
                 }
                 case '&':
                 {
@@ -127,6 +135,15 @@ namespace PMCompiler.CodeAnalysis.Syntax
                     {
                         _position += 2;
                         return new SyntaxToken(SyntaxKind.PipePipeToken, start, "||", null);
+                    }
+                    else break;
+                }
+                case '=':
+                {
+                    if (LookAhead == '=')
+                    {
+                        _position += 2;
+                        return new SyntaxToken(SyntaxKind.EqualsEqualsToken, start, "==", null);
                     }
                     else break;
                 }

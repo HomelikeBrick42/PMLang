@@ -11,7 +11,7 @@ namespace PMCompiler.CodeAnalysis.Syntax
                 case SyntaxKind.PlusToken:
                 case SyntaxKind.MinusToken:
                 case SyntaxKind.ExclamationToken:
-                    return 5;
+                    return 6;
                     
                 default:
                     return 0;
@@ -24,10 +24,14 @@ namespace PMCompiler.CodeAnalysis.Syntax
             {
                 case SyntaxKind.AsteriskToken:
                 case SyntaxKind.ForwardSlashToken:
-                    return 4;
+                    return 5;
 
                 case SyntaxKind.PlusToken:
                 case SyntaxKind.MinusToken:
+                    return 4;
+
+                case SyntaxKind.EqualsEqualsToken:
+                case SyntaxKind.ExclamationEqualsToken:
                     return 3;
 
                 case SyntaxKind.AmpersandAmpersandToken:

@@ -11,13 +11,14 @@ namespace PMCompiler.CodeAnalysis.Syntax
         MinusToken,
         AsteriskToken,
         ForwardSlashToken,
-        OpenParenthesesToken,
-        CloseParenthesesToken,
         IdentifierToken,
         ExclamationToken,
-
+        EqualsEqualsToken,
         AmpersandAmpersandToken,
+        ExclamationEqualsToken,
         PipePipeToken,
+        OpenParenthesesToken,
+        CloseParenthesesToken,
 
         // Keywords
         TrueKeyword,

@@ -71,6 +71,11 @@ namespace PMCompiler.CodeAnalysis
                         case BoundBinaryOperatorKind.LogicalOr:
                             return (bool)left || (bool)right;
 
+                        case BoundBinaryOperatorKind.LogicalEquals:
+                            return Equals(left, right);
+                        case BoundBinaryOperatorKind.LogicalNotEquals:
+                            return !Equals(left, right);
+
                         default:
                             throw new Exception($"Unexpected binary operator {binaryExpression.Operator.Kind}.");
                     }
