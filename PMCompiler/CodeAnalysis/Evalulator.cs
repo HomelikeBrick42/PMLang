@@ -13,19 +13,19 @@ namespace PMCompiler.CodeAnalysis
             _root = root;
         }
 
-        public int Evalulate()
+        public object Evalulate()
         {
             return EvalulateExpression(_root);
         }
 
-        private int EvalulateExpression(BoundExpression root)
+        private object EvalulateExpression(BoundExpression root)
         {
             switch (root.Kind)
             {
                 case BoundNodeKind.LiteralExpression:
                 {
                     var numberExpression = (BoundLiteralExpression)root;
-                    return (int)numberExpression.Value;
+                    return numberExpression.Value;
                 }
 
                 case BoundNodeKind.UnaryExpression:
@@ -36,9 +36,9 @@ namespace PMCompiler.CodeAnalysis
                     switch (unaryExpression.OperatorKind)
                     {
                         case BoundUnaryOperatorKind.Identity:
-                            return +operand;
+                            return +(int)operand;
                         case BoundUnaryOperatorKind.Negation:
-                            return -operand;
+                            return -(int)operand;
 
                         default:
                             throw new Exception($"Unexpected unary operator {unaryExpression.OperatorKind}.");
@@ -49,19 +49,19 @@ namespace PMCompiler.CodeAnalysis
                 {
                     var binaryExpression = (BoundBinaryExpression)root;
 
-                    var left = EvalulateExpression(binaryExpression.Left);
-                    var right = EvalulateExpression(binaryExpression.Right);
+                    var left = (int)EvalulateExpression(binaryExpression.Left);
+                    var right = (int)EvalulateExpression(binaryExpression.Right);
 
                     switch (binaryExpression.OperatorKind)
                     {
                         case BoundBinaryOperatorKind.Addition:
-                            return (int)left + (int)right;
+                            return left + right;
                         case BoundBinaryOperatorKind.Subtraction:
-                            return (int)left - (int)right;
+                            return left - right;
                         case BoundBinaryOperatorKind.Multiplication:
-                            return (int)left * (int)right;
+                            return left * right;
                         case BoundBinaryOperatorKind.Division:
-                            return (int)left / (int)right;
+                            return left / right;
 
                         default:
                             throw new Exception($"Unexpected binary operator {binaryExpression.OperatorKind}.");

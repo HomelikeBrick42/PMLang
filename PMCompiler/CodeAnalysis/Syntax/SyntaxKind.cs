@@ -13,6 +13,11 @@ namespace PMCompiler.CodeAnalysis.Syntax
         ForwardSlashToken,
         OpenParenthesesToken,
         CloseParenthesesToken,
+        IdentifierToken,
+
+        // Keywords
+        TrueKeyword,
+        FalseKeyword,
 
         // Expressions
         LiteralExpression,

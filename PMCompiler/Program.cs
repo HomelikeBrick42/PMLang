@@ -44,7 +44,7 @@ namespace PMCompiler
                     Console.ResetColor();
                 }
 
-                if (!syntaxTree.Diagnostics.Any())
+                if (!diagnostics.Any())
                 {
                     var evalulator = new Evalulator(boundExpression);
                     var result = evalulator.Evalulate();
@@ -54,7 +54,7 @@ namespace PMCompiler
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                    foreach (var diagnostic in syntaxTree.Diagnostics)
+                    foreach (var diagnostic in diagnostics)
                         Console.WriteLine(diagnostic);
 
                     Console.ResetColor();
