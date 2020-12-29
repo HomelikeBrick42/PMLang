@@ -26,6 +26,23 @@ namespace PMCompiler.CodeAnalysis
                     return (int)numberExpression.LiteralToken.Value;
                 }
 
+                case SyntaxKind.UnaryExpression:
+                {
+                    var unaryExpression = (UnaryExpressionSyntax)root;
+
+                    var operand = EvalulateExpression(unaryExpression.Operand);
+                    switch (unaryExpression.OperatorToken.Kind)
+                    {
+                        case SyntaxKind.PlusToken:
+                            return +operand;
+                        case SyntaxKind.MinusToken:
+                            return -operand;
+
+                        default:
+                            throw new Exception($"Unexpected unary operator {unaryExpression.OperatorToken.Kind}.");
+                    }
+                }
+
                 case SyntaxKind.BinaryExpression:
                 {
                     var binaryExpression = (BinaryExpressionSyntax)root;

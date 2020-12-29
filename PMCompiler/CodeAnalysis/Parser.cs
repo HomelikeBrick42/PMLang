@@ -68,7 +68,17 @@ namespace PMCompiler.CodeAnalysis
 
         private ExpressionSyntax ParseExpression(int parentPresedence = 0)
         {
-            var left = ParsePrimaryExpression();
+            ExpressionSyntax left;
+
+            var unaryOperatorPresedence = Current.Kind.GetUnaryOperatorPresedence();
+            if (unaryOperatorPresedence != 0 && unaryOperatorPresedence >= parentPresedence)
+            {
+                var operatorToken = NextToken();
+                var operand = ParseExpression(unaryOperatorPresedence);
+                left = new UnaryExpressionSyntax(operatorToken, operand);
+            }
+            else
+                left = ParsePrimaryExpression();
 
             while (true)
             {

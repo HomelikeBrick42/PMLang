@@ -16,8 +16,8 @@ namespace PMCompiler.CodeAnalysis
 
         // Expressions
         LiteralExpression,
-        ParenthesizedExpression,
+        UnaryExpression,
         BinaryExpression,
-        UnaryExpression
+        ParenthesizedExpression
     }
 }
