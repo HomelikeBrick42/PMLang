@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PMCompiler.CodeAnalysis
+namespace PMCompiler.CodeAnalysis.Syntax
 {
     internal sealed class Lexer
     {

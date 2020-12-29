@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PMCompiler.CodeAnalysis
+namespace PMCompiler.CodeAnalysis.Syntax
 {
     public sealed class UnaryExpressionSyntax : ExpressionSyntax
     {

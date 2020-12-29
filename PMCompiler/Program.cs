@@ -2,6 +2,7 @@
 using System.Linq;
 
 using PMCompiler.CodeAnalysis;
+using PMCompiler.CodeAnalysis.Syntax;
 
 namespace PMCompiler
 {

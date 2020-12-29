@@ -1,4 +1,4 @@
-namespace PMCompiler.CodeAnalysis
+namespace PMCompiler.CodeAnalysis.Syntax
 {
     internal static class SyntaxFacts
     {
