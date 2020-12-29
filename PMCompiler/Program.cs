@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+
+using PMCompiler.CodeAnalysis;
 
 namespace PMCompiler
 {
@@ -6,6 +9,8 @@ namespace PMCompiler
     {
         static void Main(string[] args)
         {
+            bool showTree = false;
+
             while (true)
             {
                 Console.Write("> ");
@@ -13,11 +18,66 @@ namespace PMCompiler
                 if (string.IsNullOrWhiteSpace(line))
                     return;
 
-                if (line == "1 + 2 * 3")
-                    Console.WriteLine("7");
+                switch (line)
+                {
+                    case "#showTree":
+                        showTree = !showTree;
+                        Console.WriteLine(showTree ? "Now showing tree." : "Tree is now hidden.");
+                        continue;
+                    case "#cls":
+                        Console.Clear();
+                        continue;
+                }
+
+                var syntaxTree = SyntaxTree.Parse(line);
+
+                if (showTree)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    PrettyPrint(syntaxTree.Root);
+                    Console.ResetColor();
+                }
+
+                if (!syntaxTree.Diagnostics.Any())
+                {
+                    var evalulator = new Evalulator(syntaxTree.Root);
+                    var result = evalulator.Evalulate();
+                    Console.WriteLine(result);
+                }
                 else
-                    Console.WriteLine("ERROR: Invalid expression!");
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+
+                    foreach (var diagnostic in syntaxTree.Diagnostics)
+                        Console.WriteLine(diagnostic);
+
+                    Console.ResetColor();
+                }
             }
+        }
+
+        static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
+        {
+            var marker = isLast ? "└───" : "├───";
+
+            Console.Write(indent);
+            Console.Write(marker);
+            Console.Write(node.Kind);
+
+            if (node is SyntaxToken t && t.Value != null)
+            {
+                Console.Write(" ");
+                Console.Write(t.Value);
+            }
+
+            Console.WriteLine();
+
+            indent += isLast ? "    " : "│   ";
+
+            var lastChild = node.GetChildren().LastOrDefault();
+
+            foreach (var child in node.GetChildren())
+                PrettyPrint(child, indent, child == lastChild);
         }
     }
 }
