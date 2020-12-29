@@ -20,7 +20,7 @@ namespace PMCompiler.CodeAnalysis
         {
             switch (root.Kind)
             {
-                case SyntaxKind.NumberExpression:
+                case SyntaxKind.LiteralExpression:
                 {
                     var numberExpression = (LiteralExpressionSyntax)root;
                     return (int)numberExpression.LiteralToken.Value;

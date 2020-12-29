@@ -15,7 +15,7 @@ namespace PMCompiler.CodeAnalysis
         CloseParenthesesToken,
 
         // Expressions
-        NumberExpression,
+        LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression
     }
