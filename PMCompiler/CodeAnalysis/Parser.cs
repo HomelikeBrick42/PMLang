@@ -72,7 +72,7 @@ namespace PMCompiler.CodeAnalysis
 
             while (true)
             {
-                var presedence = GetBinaryOperatorPresedence(Current.Kind);
+                var presedence = Current.Kind.GetBinaryOperatorPresedence();
                 if (presedence == 0 || presedence <= parentPresedence)
                     break;
 
@@ -82,23 +82,6 @@ namespace PMCompiler.CodeAnalysis
             }
 
             return left;
-        }
-
-        private static int GetBinaryOperatorPresedence(SyntaxKind kind)
-        {
-            switch (kind)
-            {
-                case SyntaxKind.AsteriskToken:
-                case SyntaxKind.ForwardSlashToken:
-                    return 2;
-
-                case SyntaxKind.PlusToken:
-                case SyntaxKind.MinusToken:
-                    return 1;
-
-                default:
-                    return 0;
-            }
         }
 
         private ExpressionSyntax ParsePrimaryExpression()
