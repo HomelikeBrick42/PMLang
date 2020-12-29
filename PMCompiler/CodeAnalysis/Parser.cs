@@ -66,37 +66,39 @@ namespace PMCompiler.CodeAnalysis
             return new SyntaxTree(_diagnostics, expression, endOfFileToken);
         }
 
-        private ExpressionSyntax ParseExpression()
-        {
-            return ParseTerm();
-        }
-
-        private ExpressionSyntax ParseTerm()
-        {
-            var left = ParseFactor();
-            while (Current.Kind == SyntaxKind.PlusToken ||
-                   Current.Kind == SyntaxKind.MinusToken)
-            {
-                var operatorToken = NextToken();
-                var right = ParseFactor();
-                left = new BinaryExpressionSyntax(left, operatorToken, right);
-            }
-
-            return left;
-        }
-
-        private ExpressionSyntax ParseFactor()
+        private ExpressionSyntax ParseExpression(int parentPresedence = 0)
         {
             var left = ParsePrimaryExpression();
-            while (Current.Kind == SyntaxKind.AsteriskToken ||
-                   Current.Kind == SyntaxKind.ForwardSlashToken)
+
+            while (true)
             {
+                var presedence = GetBinaryOperatorPresedence(Current.Kind);
+                if (presedence == 0 || presedence <= parentPresedence)
+                    break;
+
                 var operatorToken = NextToken();
-                var right = ParsePrimaryExpression();
+                var right = ParseExpression(presedence);
                 left = new BinaryExpressionSyntax(left, operatorToken, right);
             }
 
             return left;
+        }
+
+        private static int GetBinaryOperatorPresedence(SyntaxKind kind)
+        {
+            switch (kind)
+            {
+                case SyntaxKind.AsteriskToken:
+                case SyntaxKind.ForwardSlashToken:
+                    return 2;
+
+                case SyntaxKind.PlusToken:
+                case SyntaxKind.MinusToken:
+                    return 1;
+
+                default:
+                    return 0;
+            }
         }
 
         private ExpressionSyntax ParsePrimaryExpression()
